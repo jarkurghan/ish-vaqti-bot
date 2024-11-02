@@ -1,9 +1,7 @@
-async function start(bot, msg) {
+async function restart(bot, msg) {
     try {
         if (msg.chat.type === 'private') {
             const chatId = msg.chat.id;
-
-            await bot.sendMessage(chatId, 'Salom! Botga xush kelibsiz!');
 
             await bot.sendMessage(chatId, 'Ish vaqtingizni kiritishni xohlaysizmi?', {
                 reply_markup: {
@@ -22,4 +20,4 @@ async function start(bot, msg) {
     }
 }
 
-module.exports = start;
+module.exports = restart;

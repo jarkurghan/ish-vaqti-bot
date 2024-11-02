@@ -12,6 +12,7 @@ const abetVaqti = require('./callback-queries/abet-vaqti');
 const abetYoq = require('./callback-queries/abet-yoq');
 const abetBoshlanishVaqti = require('./callback-queries/abet-boshlanish-vaqti');
 const abetTugashVaqti = require('./callback-queries/abet-tugash-vaqti');
+const restart = require('./callback-queries/restart');
 
 const token = process.env.TELEGRAM_TOKEN;
 const bot = new TelegramBot(token, { polling: true });
@@ -20,8 +21,8 @@ bot.onText(/\/start/, (msg) => start(bot, msg));
 
 bot.on('callback_query', (query) => {
     console.log(query.data);
-    if (query.data === 'Ish vaqtini kiritish') ishVaqtiniKiritish(bot, query);
-    else if (query.data === 'Ish vaqtini kiritmaslik') ishVaqtiniKiritmaslik(bot, query);
+    if (query.data === 'ish-vaqtini-kiritish') ishVaqtiniKiritish(bot, query);
+    else if (query.data === 'ish-vaqtini-kiritmaslik') ishVaqtiniKiritmaslik(bot, query);
     else if (query.data.startsWith("city_time_")) soatniTanlash(bot, query)
     else if (query.data === 'work_day_finish') ishKunlariniTanlashFinish(bot, query);
     else if (query.data.startsWith("work_day_")) ishKunlariniTanlash(bot, query)
@@ -32,3 +33,6 @@ bot.on('callback_query', (query) => {
     else if (query.data.startsWith("abet_start_time_")) abetBoshlanishVaqti(bot, query)
     else if (query.data.startsWith("abet_end_time_")) abetTugashVaqti(bot, query)
 })
+
+
+bot.on('message', (msg) => restart(bot, msg));
