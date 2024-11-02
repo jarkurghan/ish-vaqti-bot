@@ -1,61 +1,20 @@
-const fs = require('fs');
-const path = require('path');
-
-const daysOfWeek = [
-    { text: 'Dushanba', callback_data: 'work_day_Dushanba' },
-    { text: 'Seshanba', callback_data: 'work_day_Seshanba' },
-    { text: 'Chorshanba', callback_data: 'work_day_Chorshanba' },
-    { text: 'Payshanba', callback_data: 'work_day_Payshanba' },
-    { text: 'Juma', callback_data: 'work_day_Juma' },
-    { text: 'Shanba', callback_data: 'work_day_Shanba' },
-    { text: 'Yakshanba', callback_data: 'work_day_Yakshanba' },
-];
-
-
-function chunkArray(array, size) {
-    const result = [];
-    for (let i = 0; i < array.length; i += size) {
-        result.push(array.slice(i, i + size));
-    }
-    return result;
-}
-
-function getUserFilePath(userId) {
-    return path.join(__dirname, `../data/${userId}.json`);
-}
-
-// Foydalanuvchi faylini o'qish
-function readUserSelections(userId) {
-    const filePath = getUserFilePath(userId);
-    if (fs.existsSync(filePath)) {
-        const data = fs.readFileSync(filePath);
-        return JSON.parse(data);
-    }
-    return [];
-}
-
-const fsp = require('fs/promises');
-
-async function saveUserSelections(userId, selections) {
-    const filePath = getUserFilePath(userId);
-    await fsp.writeFile(filePath, JSON.stringify(selections));
-}
+const chunkArray = require("./set-data/chunk-inline-keyboard");
+const daysOfWeek = require("./set-data/days-of-week");
+const readUserInfo = require("./set-data/read-user-info");
+const saveUserInfo = require("./set-data/save-user-info");
 
 async function ishKunlariniTanlash(bot, query) {
     try {
         const chatId = query.message.chat.id;
-
         const selectedData = query.data;
-        let userSelections = readUserSelections(chatId);
-
         const selectedDay = selectedData.replace('work_day_', '');
+        const selectedDays = (await readUserInfo(chatId)).ish_kunlari || [];
 
-        // yozish
-        if (!userSelections.includes(selectedDay)) userSelections.push(selectedDay);
-        else userSelections.splice(userSelections.indexOf(selectedDay), 1);
-        await saveUserSelections(chatId, userSelections);
+        if (!selectedDays.includes(selectedDay)) selectedDays.push(selectedDay);
+        else selectedDays.splice(selectedDays.indexOf(selectedDay), 1);
+        await saveUserInfo(chatId, "ish_kunlari", selectedDays);
 
-        const days = daysOfWeek.map(e => ({ ...e, text: e.text + (userSelections.includes(e.text) ? " ✅" : "") }));
+        const days = daysOfWeek.map(e => ({ ...e, text: e.text + (selectedDays.includes(e.text) ? " ✅" : "") }));
 
         await bot.editMessageText('Quyidagi hafta kunlaridan bir nechtasini tanlang:', {
             chat_id: chatId,
