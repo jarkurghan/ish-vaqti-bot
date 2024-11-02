@@ -12,7 +12,6 @@ async function ishKunlariniTanlashFinish(bot, query) {
             message_id
         });
 
-
         const now = new Date();
         now.setHours(7, 0, 0, 0)
         let options = [];

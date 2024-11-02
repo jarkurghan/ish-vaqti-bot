@@ -15,7 +15,7 @@ async function soatniTanlash(bot, query) {
         const days = daysOfWeek.map(e => ({ ...e, text: e.text + (selectedDays.includes(e.text) ? " ✅" : "") }));
 
         await bot.sendMessage(chat_id, 'Quyidagi hafta kunlaridan bir nechtasini tanlang:', {
-            reply_markup: { inline_keyboard: chunkArray(days, 1).concat([[{ text: 'Tugatish', callback_data: 'work_day_finish' }]]) }
+            reply_markup: { inline_keyboard: chunkArray(days, 1).concat([[{ text: 'Tayyor', callback_data: 'work_day_finish' }]]) }
         });
 
     } catch (error) {

@@ -20,7 +20,7 @@ async function ishKunlariniTanlash(bot, query) {
             chat_id: chatId,
             message_id: query.message.message_id,
             reply_markup: {
-                inline_keyboard: chunkArray(days, 1).concat([[{ text: 'Tugatish', callback_data: 'work_day_finish' }]])
+                inline_keyboard: chunkArray(days, 1).concat([[{ text: 'Tayyor', callback_data: 'work_day_finish' }]])
             }
         });
     } catch (error) {
