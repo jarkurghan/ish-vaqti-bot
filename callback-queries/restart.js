@@ -1,6 +1,6 @@
 async function restart(bot, msg) {
     try {
-        if (msg.chat.type === 'private') {
+        if (msg.chat.type === 'private' && !msg.text.startsWith("/")) {
             const chatId = msg.chat.id;
 
             await bot.sendMessage(chatId, 'Ish vaqtingizni kiritishni xohlaysizmi?', {
