@@ -1,12 +1,8 @@
-# ish-vaqti-bot
+# Telegram Ish Vaqti Bot
 
+Ushbu Telegram bot Node.js yordamida yaratilgan bo‘lib, foydalanuvchilardan ish vaqti haqidagi ma'lumotlarni oladi va bu ma'lumotlarni guruhda boshqalarga baham ko'radi.
 
-### README faylini tayyorlashda e'tibor beriladigan nuqtalar:
+## Asosiy Funksiyalar
 
-- **Talablar**: Node.js va NPM versiyalarini aniqlab berish.
-- **O'rnatish**: Loyiha qanday o'rnatilishi va kerakli fayllar haqida ma'lumot.
-- **Ishga tushirish**: Botni qanday ishga tushirish haqida ko'rsatmalar.
-- **Asosiy funksiyalar**: Botning qanday imkoniyatlari borligi va foydalanuvchilar qanday qilib bot bilan o'zaro aloqa qilishlari mumkinligi.
-- **Muallif va lizensiya**: O'zingizning ma'lumotlaringizni qo'shishni unutmang.
-
-Bu misolni o'zingizning loyihangizga mos ravishda o'zgartiring va to'ldiring. Agar qo'shimcha savollaringiz bo'lsa yoki biror narsani aniqlashtirish kerak bo'lsa, bemalol so'rang!
+- Foydalanuvchidan ish vaqti haqidagi ma'lumotlarni olish
+- Foydalanuvchining ish jadvalini guruhda baham ko‘rish
