@@ -12,7 +12,7 @@ const abetVaqti = require('./methods/abet-vaqti');
 const abetYoq = require('./methods/abet-yoq');
 const abetBoshlanishVaqti = require('./methods/abet-boshlanish-vaqti');
 const abetTugashVaqti = require('./methods/abet-tugash-vaqti');
-const restart = require('./methods/restart');
+const message = require('./methods/message');
 const addGroup = require('./methods/add-group');
 const info = require('./methods/info');
 const status = require('./methods/status');
@@ -21,6 +21,11 @@ const token = process.env.TELEGRAM_TOKEN;
 const bot = new TelegramBot(token, { polling: true });
 
 bot.onText(/\/start/, (msg) => start(bot, msg));
+bot.on('message', (msg) => message(bot, msg));
+
+bot.on('new_chat_members', (msg) => addGroup(bot, msg));
+bot.onText(/\/info/, (msg) => info(bot, msg));
+bot.onText(/\/status/, (msg) => status(bot, msg));
 
 bot.on('callback_query', (query) => {
     console.log(query.data);
@@ -36,11 +41,3 @@ bot.on('callback_query', (query) => {
     else if (query.data.startsWith("abet_start_time_")) abetBoshlanishVaqti(bot, query)
     else if (query.data.startsWith("abet_end_time_")) abetTugashVaqti(bot, query)
 })
-
-bot.on('message', (msg) => restart(bot, msg));
-
-bot.on('new_chat_members', (msg) => addGroup(bot, msg));
-
-bot.onText(/\/info/, (msg) => info(bot, msg));
-
-bot.onText(/\/status/, (msg) => status(bot, msg));
