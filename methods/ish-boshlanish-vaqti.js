@@ -6,7 +6,7 @@ async function ishBoshlanishVaqti(bot, query) {
     try {
         const chat_id = query.message.chat.id;
         const message_id = query.message.message_id;
-        const selectedTime = (query.data.replace('work_start_time_', ''));
+        const selectedTime = parseInt(query.data.replace('work_start_time_', ''));
         const time = convertMinutesToTime(query.data.replace('work_start_time_', ''));
 
         await saveUserInfo(chat_id, "ish_boshlanish_vaqti", selectedTime);

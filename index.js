@@ -15,6 +15,7 @@ const abetTugashVaqti = require('./methods/abet-tugash-vaqti');
 const restart = require('./methods/restart');
 const addGroup = require('./methods/add-group');
 const info = require('./methods/info');
+const status = require('./methods/status');
 
 const token = process.env.TELEGRAM_TOKEN;
 const bot = new TelegramBot(token, { polling: true });
@@ -41,3 +42,5 @@ bot.on('message', (msg) => restart(bot, msg));
 bot.on('new_chat_members', (msg) => addGroup(bot, msg));
 
 bot.onText(/\/info/, (msg) => info(bot, msg));
+
+bot.onText(/\/status/, (msg) => status(bot, msg));

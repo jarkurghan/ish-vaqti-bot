@@ -5,7 +5,7 @@ async function abetTugashVaqti(bot, query) {
     try {
         const chat_id = query.message.chat.id;
         const message_id = query.message.message_id;
-        const selectedTime = (query.data.replace('abet_end_time_', ''));
+        const selectedTime = parseInt(query.data.replace('abet_end_time_', ''));
         const time = convertMinutesToTime(query.data.replace('abet_end_time_', ''));
 
         await saveUserInfo(chat_id, "abet_tugash_vaqti", selectedTime)
