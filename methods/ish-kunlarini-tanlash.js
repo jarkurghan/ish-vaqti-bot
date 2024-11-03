@@ -1,7 +1,7 @@
-const chunkArray = require("./set-data/chunk-inline-keyboard");
-const daysOfWeek = require("./set-data/days-of-week");
-const readUserInfo = require("./set-data/read-user-info");
-const saveUserInfo = require("./set-data/save-user-info");
+const chunkArray = require("../utils/chunk-inline-keyboard");
+const readUserInfo = require("../utils/read-user-info");
+const saveUserInfo = require("../utils/save-user-info");
+const daysOfWeek = require("../utils/days-of-week");
 
 async function ishKunlariniTanlash(bot, query) {
     try {
@@ -16,7 +16,7 @@ async function ishKunlariniTanlash(bot, query) {
 
         const days = daysOfWeek.map(e => ({ ...e, text: e.text + (selectedDays.includes(e.text) ? " ✅" : "") }));
 
-        await bot.editMessageText('Quyidagi hafta kunlaridan bir nechtasini tanlang:', {
+        await bot.editMessageText('Ish kunlaringizni belgilang:', {
             chat_id: chatId,
             message_id: query.message.message_id,
             reply_markup: {

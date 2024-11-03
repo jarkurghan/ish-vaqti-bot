@@ -1,4 +1,4 @@
-const chunkArray = require("./set-data/chunk-inline-keyboard");
+const chunkArray = require("../utils/chunk-inline-keyboard");
 
 async function abetVaqti(bot, query) {
     try {
@@ -13,8 +13,9 @@ async function abetVaqti(bot, query) {
 
         for (let i = 0; i < 24; i++) {
             const date = new Date(now.getTime() + i * 60 * 60 * 1000);
-            const timeString = date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-            options.push({ text: timeString, callback_data: `abet_start_time_${timeString}` });
+            const time = date.toTimeString().slice(0, 5);
+            const timeMinutes = parseInt(time.slice(0, 2)) * 60 + parseInt(time.slice(3, 5));
+            options.push({ text: time, callback_data: `abet_start_time_${timeMinutes}` });
         }
 
         await bot.sendMessage(chat_id, 'Abet boshlanish vaqti nechi?', {

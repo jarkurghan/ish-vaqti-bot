@@ -1,15 +1,17 @@
-const chunkArray = require("./set-data/chunk-inline-keyboard");
-const saveUserInfo = require("./set-data/save-user-info");
+const chunkArray = require("../utils/chunk-inline-keyboard");
+const convertMinutesToTime = require("../utils/convert-minut-to-time");
+const saveUserInfo = require("../utils/save-user-info");
 
 async function ishBoshlanishVaqti(bot, query) {
     try {
         const chat_id = query.message.chat.id;
         const message_id = query.message.message_id;
-        const selectedTime = query.data.replace('work_start_time_', '');
+        const selectedTime = (query.data.replace('work_start_time_', ''));
+        const time = convertMinutesToTime(query.data.replace('work_start_time_', ''));
 
         await saveUserInfo(chat_id, "ish_boshlanish_vaqti", selectedTime);
 
-        await bot.editMessageText('Ishingizning boshlanish vaqti nechi?:\n\nJavob: ' + selectedTime, {
+        await bot.editMessageText('Ishingizning boshlanish vaqti nechi?\n\nJavob: ' + time, {
             chat_id,
             message_id
         });
@@ -21,8 +23,9 @@ async function ishBoshlanishVaqti(bot, query) {
 
         for (let i = 0; i < 24; i++) {
             const date = new Date(now.getTime() + i * 60 * 60 * 1000);
-            const timeString = date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-            options.push({ text: timeString, callback_data: `work_end_time_${timeString}` });
+            const time = date.toTimeString().slice(0, 5);
+            const timeMinutes = parseInt(time.slice(0, 2)) * 60 + parseInt(time.slice(3, 5));
+            options.push({ text: time, callback_data: `work_end_time_${timeMinutes}` });
         }
 
         await bot.sendMessage(chat_id, 'Ishingizning tugash vaqti nechi?', {

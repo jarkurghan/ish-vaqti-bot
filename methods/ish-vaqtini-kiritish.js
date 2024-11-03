@@ -1,3 +1,5 @@
+const chunkArray = require("../utils/chunk-inline-keyboard");
+
 function ishVaqtiniKiritish(bot, query) {
     try {
         const chat_id = query.message.chat.id;
@@ -12,18 +14,11 @@ function ishVaqtiniKiritish(bot, query) {
         const now = new Date();
         let options = [];
 
-        const chunkArray = (array, size) => {
-            const result = [];
-            for (let i = 0; i < array.length; i += size) {
-                result.push(array.slice(i, i + size));
-            }
-            return result;
-        }
-
         for (let i = 0; i < 48; i++) {
             const date = new Date(now.getTime() + i * 30 * 60 * 1000);
-            const timeString = date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-            options.push({ text: timeString, callback_data: `city_time_${timeString}` });
+            const time = date.toTimeString().slice(0, 5);
+            const timeMinutes = parseInt(time.slice(0, 2)) * 60 + parseInt(time.slice(3, 5));
+            options.push({ text: time, callback_data: `city_time_${timeMinutes}` });
         }
 
         bot.sendMessage(chat_id, 'Hozir sizda soat nechi?', {
